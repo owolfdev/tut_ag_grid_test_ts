@@ -146,5 +146,27 @@ export const useSupabase = () => {
     }
   }
 
+  async function updateFilm(filmData: any) {
+    console.log("filmsData", filmData);
+    try {
+      let { data, error, status } = await supabase
+        .from("films_duplicate")
+        .update({ accepted: filmData.accepted, rejected: false })
+        .eq("id", filmData.id);
+      if (error && status !== 406) {
+        throw error;
+      }
+      if (data) {
+        return data;
+      } else {
+        console.log("no data");
+        return data;
+      }
+    } catch (error) {
+      console.log("error from get profile", error);
+    } finally {
+    }
+  }
+
   return { getFilms, getProfile, getProfiles, updateProfile, createProfile };
 };
